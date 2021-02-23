@@ -1,44 +1,67 @@
-import React, { useState } from 'react';
-import axios from 'axios';
-import './App.css';
+import React from 'react';
 
-function App() {
-  const [submitting, setSubmitting] = useState(false);
-  const handleSubmit = event => {
+const inputParsers = {
+  date(input) {
+    const [month, day, year] = input.split('/');
+    return `${year}-${month}-${day}`;
+  },
+  uppercase(input) {
+    return input.toUpperCase();
+  },
+  number(input) {
+    return parseFloat(input);
+  },
+};
+
+class MyForm extends React.Component {
+  constructor() {
+    super();
+    this.handleSubmit = this.handleSubmit.bind(this);
+  }
+
+  handleSubmit(event) {
     event.preventDefault();
-    setSubmitting(true);
+    const form = event.target;
+    const data = new FormData(form);
 
-    const axios = require('axios').default;
-    var teste1 = 'https://oumbd5l1x3.execute-api.us-east-1.amazonaws.com/dev/register'
-    axios.get(teste1)
-    .then(resp => {
-        console.log(resp.data);
-        setSubmitting(false);
-        
-    })
-    .catch(err => {
-        // Handle Error Here
-        console.error(err);
-    });
- }
+    for (let name of data.keys()) {
+      const input = form.elements[name];
+      const parserName = input.dataset.parse;
 
-  return(
-    <div className="wrapper">
-      <h1>How About Them Apples</h1>
-      {submitting &&
-       <div>Submtting Form...</div>
+      if (parserName) {
+        const parser = inputParsers[parserName];
+        const parsedValue = parser(data.get(name));
+        data.set(name, parsedValue);
       }
-      <form onSubmit={handleSubmit}>
-        <fieldset>
-          <label>
-            <p>Name</p>
-            <input name="name" />
-          </label>
-        </fieldset>
-        <button type="submit">Submit</button>
+    }
+    alert(data)
+    fetch('/api/form-submit-url', {
+      method: 'POST',
+      body: data,
+    });
+  }
+
+  render() {
+    return (
+      <form onSubmit={this.handleSubmit}>
+        <input
+          name="username"
+          type="text"
+          data-parse="uppercase"
+        />
+
+        <input name="email" type="email" />
+
+        <input
+          name="birthdate"
+          type="text"
+          data-parse="date"
+        />
+
+        <button>Send data!</button>
       </form>
-    </div>
-  )
+    );
+  }
 }
 
-export default App;
+export default MyForm;
