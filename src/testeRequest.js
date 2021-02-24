@@ -15,12 +15,12 @@ export default class App extends Component {
   }
 
  async getOptions(){
-    const res = await axios.get('https://oumbd5l1x3.execute-api.us-east-1.amazonaws.com/hml/register')
+    const res = await axios.get('https://oumbd5l1x3.execute-api.us-east-1.amazonaws.com/hml/tag')
     const data = res.data
 
-    const options = data.registers.map(d => ({
+    const options = data.tags.map(d => ({
       "value" : d.id,
-      "label" : d.description
+      "label" : d.name
 
     }))
 
