@@ -9,8 +9,7 @@ export default class App extends Component {
     super(props)
     this.state = {
       selectOptions : [],
-      id: "",
-      name: ''
+      value:[]
     }
   }
 
@@ -29,7 +28,7 @@ export default class App extends Component {
   }
 
   handleChange(e){
-   this.setState({id:e.value, name:e.label})
+    this.setState({value:e})
   }
 
   componentDidMount(){
@@ -37,11 +36,13 @@ export default class App extends Component {
   }
 
   render() {
-    console.log(this.state.selectOptions)
+    console.log(this.state.value)
     return (
       <div>
-        <Select options={this.state.selectOptions} onChange={this.handleChange.bind(this)} />
-    <p>You have selected <strong>{this.state.name}</strong> whose id is <strong>{this.state.id}</strong></p>
+        <Select options={this.state.selectOptions} onChange={this.handleChange.bind(this)} isMulti />
+        {
+           this.state.value === null ? "" : this.state.value.map(v => <h4>{v.value}</h4>)
+        }
       </div>
     )
   }
