@@ -1,5 +1,7 @@
-import React, { useReducer, useState } from 'react';
+import React, {Component, useReducer, useState } from 'react';
 import './App.css';
+import Select from 'react-select'
+
 
 const formReducer = (state, event) => {
   return {
@@ -7,6 +9,14 @@ const formReducer = (state, event) => {
    [event.name]: event.value
  }
 }
+
+const options = [
+  { value: 'chocolate', label: 'Chocolate' },
+  { value: 'strawberry', label: 'Strawberry' },
+  { value: 'key1', label: 'value1' },
+  { value: 'key2', label: 'value2' },
+  { value: 'vanilla', label: 'Vanilla' }
+]
 
 function App() {
   const [formData, setFormData] = useReducer(formReducer, {});
@@ -74,6 +84,8 @@ function App() {
             <p>Tag Id</p>
             <input name="tag_id" onChange={handleChange}/>
           </label>
+          <p>Tags</p>
+          <Select options={options}/>
         </fieldset>
         <button type="submit">Submit</button>
       </form>
