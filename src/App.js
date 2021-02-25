@@ -1,6 +1,5 @@
 import React, {Component, useReducer, useState } from 'react';
 import './App.css';
-import Select from 'react-select'
 import AsyncSelect from 'react-select/async';
 
 
@@ -13,14 +12,6 @@ const formReducer = (state, event) => {
 
 var valueTeste = []
 
-const options = [
-  { value: 'chocolate', label: 'Chocolate' },
-  { value: 'strawberry', label: 'Strawberry' },
-  { value: 'key1', label: 'value1' },
-  { value: 'key2', label: 'value2' },
-  { value: 'vanilla', label: 'Vanilla' }
-]
-
 async function getOptions(){
   var axios = require('axios');
   const res = await axios.get('https://oumbd5l1x3.execute-api.us-east-1.amazonaws.com/hml/tag')
@@ -30,7 +21,6 @@ async function getOptions(){
     "value" : d.id,
     "label" : d.name
   }))
-  //alert(options)
   return options
 }
 
@@ -40,14 +30,11 @@ function App() {
   const [submitting, setSubmitting] = useState(false);
 
   const handleSubmit = event => {
-    alert(valueTeste)
-    
-    valueTeste.map(v => console.log(v.value))
     const tags = valueTeste.map(d => ({
       "tag" : d.value
     }))
-    tags.map(v => console.log(v.tag))
-    //
+    //tags.map(v => console.log(v.tag))
+    
     var description = event.target.description.value
     var value = event.target.value.value
     var type = event.target.type.value
