@@ -1,7 +1,6 @@
 import React, {Component, useReducer, useState } from 'react';
 import './App.css';
 import Select from 'react-select'
-import Combo from './testeRequest'
 import AsyncSelect from 'react-select/async';
 
 
@@ -11,6 +10,8 @@ const formReducer = (state, event) => {
    [event.name]: event.value
  }
 }
+
+var valueTeste = []
 
 const options = [
   { value: 'chocolate', label: 'Chocolate' },
@@ -28,7 +29,6 @@ async function getOptions(){
   const options = data.tags.map(d => ({
     "value" : d.id,
     "label" : d.name
-
   }))
   //alert(options)
   return options
@@ -39,16 +39,22 @@ function App() {
   const [formData, setFormData] = useReducer(formReducer, {});
   const [submitting, setSubmitting] = useState(false);
 
-
   const handleSubmit = event => {
+    alert(valueTeste)
+    
+    valueTeste.map(v => console.log(v.value))
+    const tags = valueTeste.map(d => ({
+      "tag" : d.value
+    }))
+    tags.map(v => console.log(v.tag))
+    //
     var description = event.target.description.value
     var value = event.target.value.value
     var type = event.target.type.value
-    var tag_id = event.target.tag_id.value
     event.preventDefault();
     setSubmitting(true);
     var axios = require('axios');
-    var data = JSON.stringify({"description":description,"value":value,"type":type,"tags":[{"tag":tag_id}]});
+    var data = JSON.stringify({"description":description,"value":value,"type":type,"tags":tags});
     
     var config = {
       method: 'post',
@@ -68,6 +74,14 @@ function App() {
       console.log(error);
     });
     
+  }
+
+  
+  const handleChangeCombo = (e) => {
+    var a = {value:e}
+    var b = a.value
+    //alert(b)
+    valueTeste = b
   }
 
   const handleChange = event => {
@@ -100,13 +114,9 @@ function App() {
             <input name="value" onChange={handleChange}/>
             <p>Type</p>
             <input name="type" onChange={handleChange}/>
-            <p>Tag Id</p>
-            <input name="tag_id" onChange={handleChange}/>
           </label>
           <p>Tags</p>
-          <Select options={options}/>
-          <Combo/>
-          <AsyncSelect cacheOptions defaultOptions loadOptions={getOptions} onChange={handleChange} isMulti/>
+          <AsyncSelect cacheOptions defaultOptions loadOptions={getOptions} onChange={handleChangeCombo} isMulti/>
         </fieldset>
         <button type="submit">Submit</button>
       </form>
