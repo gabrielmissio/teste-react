@@ -14,18 +14,19 @@ export default class App extends Component {
   }
 
  async getOptions(){
-    const res = await axios.get('https://oumbd5l1x3.execute-api.us-east-1.amazonaws.com/hml/tag')
-    const data = res.data
+  var axios = require('axios');
+  const res = await axios.get('https://oumbd5l1x3.execute-api.us-east-1.amazonaws.com/hml/tag')
+  const data = res.data
 
-    const options = data.tags.map(d => ({
-      "value" : d.id,
-      "label" : d.name
+  const options = data.tags.map(d => ({
+    "value" : d.id,
+    "label" : d.name
 
-    }))
+  }))
 
-    this.setState({selectOptions: options})
+  this.setState({selectOptions: options})
 
-  }
+}
 
   handleChange(e){
     this.setState({value:e})

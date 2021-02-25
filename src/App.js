@@ -18,9 +18,24 @@ const options = [
   { value: 'vanilla', label: 'Vanilla' }
 ]
 
+async function getOptions(){
+  var axios = require('axios');
+  const res = await axios.get('https://oumbd5l1x3.execute-api.us-east-1.amazonaws.com/hml/tag')
+  const data = res.data
+
+  const options = data.tags.map(d => ({
+    "value" : d.id,
+    "label" : d.name
+
+  }))
+  alert(options)
+}
+
+
 function App() {
   const [formData, setFormData] = useReducer(formReducer, {});
   const [submitting, setSubmitting] = useState(false);
+
 
   const handleSubmit = event => {
     var description = event.target.description.value
@@ -57,7 +72,10 @@ function App() {
       name: event.target.name,
       value: event.target.value,
     });
+    getOptions()
+
   }
+
 
   return(
     <div className="wrapper">
