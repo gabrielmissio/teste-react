@@ -1,6 +1,8 @@
 import React, {Component, useReducer, useState } from 'react';
 import './App.css';
 import Select from 'react-select'
+import Combo from './testeRequest'
+import AsyncSelect from 'react-select/async';
 
 
 const formReducer = (state, event) => {
@@ -28,7 +30,8 @@ async function getOptions(){
     "label" : d.name
 
   }))
-  alert(options)
+  //alert(options)
+  return options
 }
 
 
@@ -72,8 +75,6 @@ function App() {
       name: event.target.name,
       value: event.target.value,
     });
-    getOptions()
-
   }
 
 
@@ -104,6 +105,8 @@ function App() {
           </label>
           <p>Tags</p>
           <Select options={options}/>
+          <Combo/>
+          <AsyncSelect cacheOptions defaultOptions loadOptions={getOptions} onChange={handleChange} isMulti/>
         </fieldset>
         <button type="submit">Submit</button>
       </form>
