@@ -8,9 +8,11 @@ import TableContainer from '@material-ui/core/TableContainer';
 import TableHead from '@material-ui/core/TableHead';
 import TablePagination from '@material-ui/core/TablePagination';
 import TableRow from '@material-ui/core/TableRow';
+import Clock from './TesteTable';
+
 
 const columns = [
-  { id: 'name', label: 'Name', minWidth: 170 },
+  { id: 'code', label: 'Name', minWidth: 170 },
   { id: 'code', label: 'ISO\u00a0Code', minWidth: 100 },
   {
     id: 'population',
@@ -116,6 +118,9 @@ export default function StickyHeadTable() {
                 <TableRow hover role="checkbox" tabIndex={-1} key={row.code}>
                   {columns.map((column) => {
                     const value = row[column.id];
+                    console.log('-------')
+                    console.log(row)
+                    console.log('-------')
                     return (
                       <TableCell key={column.id} align={column.align}>
                         {column.format && typeof value === 'number' ? column.format(value) : value}

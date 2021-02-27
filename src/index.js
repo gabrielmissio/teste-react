@@ -2,12 +2,13 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
 //import App from './App';
-import StickyHeadTable from './TableRegister';
+//import StickyHeadTable from './TableRegister';
+import TableExp from './TesteTable';
 import reportWebVitals from './reportWebVitals';
 
 ReactDOM.render(
   <React.StrictMode>
-    <StickyHeadTable />
+    <TableExp />
   </React.StrictMode>,
   document.getElementById('root')
 );
