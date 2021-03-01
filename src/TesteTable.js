@@ -12,26 +12,27 @@ import TablePagination from '@material-ui/core/TablePagination';
 import TableRow from '@material-ui/core/TableRow';
 
 const columns = [
-  { id: 'description', label: 'Name', minWidth: 170 },
-  { id: 'code', label: 'ISO\u00a0Code', minWidth: 100 },
+  { id: 'id', label: 'Id', minWidth: 50 },
+  { id: 'description', label: 'Description', minWidth: 100 },
+  { id: 'type', label: 'Type', minWidth: 50 },
   {
-    id: 'population',
-    label: 'Population',
-    minWidth: 170,
+    id: 'value',
+    label: 'Value',
+    minWidth: 100,
     align: 'right',
     format: (value) => value.toLocaleString('en-US'),
   },
   {
-    id: 'size',
-    label: 'Size\u00a0(km\u00b2)',
-    minWidth: 170,
+    id: 'inserted_at',
+    label: 'Inserted at',
+    minWidth: 100,
     align: 'right',
     format: (value) => value.toLocaleString('en-US'),
   },
   {
-    id: 'density',
-    label: 'Density',
-    minWidth: 170,
+    id: 'updated_at',
+    label: 'Updated at',
+    minWidth: 100,
     align: 'right',
     format: (value) => value.toFixed(2),
   },
@@ -44,36 +45,22 @@ class TableExp extends React.Component {
 
       this.state = {
           tableData: [{
-              resourceID: '',
-              resourceType: '',
-              tenantName: '',
-              dealerID: '',
-              status: '',
-              logFilePath: '',
-              description: '',
-              lastUpdatedTime: '',
+              
           }],
+          paginationInfo: [{
+
+          }]
       };
   }
 
-  componentDidMount123 () {
-      axios.get('http://private-9ff5e-stackoverflow.apiary-mock.com/questions', {
-          responseType: 'json'
-      }).then(response => {
-          console.log(response.data)
-          this.setState({ tableData: response.data });
-          console.log(this.state.tableData)
-      });
-  }
 
   componentDidMount () {
       axios.get('https://oumbd5l1x3.execute-api.us-east-1.amazonaws.com/hml/register', {
           responseType: 'json'
       }).then(response => {
           var data = response.data
-          console.log(data.registers)
           this.setState({ tableData: data.registers });
-          console.log(this.state.tableData)
+          //console.log(this.state.tableData)
       });
   }
 
@@ -103,9 +90,6 @@ class TableExp extends React.Component {
                     <TableRow hover role="checkbox" tabIndex={-1} key={row.code}>
                       {columns.map((column) => {
                         const value = row[column.id];
-                        console.log('-------')
-                        console.log(row)
-                        console.log('-------')
                         return (
                           <TableCell key={column.id} align={column.align}>
                             {column.format && typeof value === 'number' ? column.format(value) : value}
