@@ -18,7 +18,7 @@ const columns = [
   {
     id: 'value',
     label: 'Value',
-    minWidth: 100,
+    minWidth: 50,
     align: 'right',
     format: (value) => value.toLocaleString('en-US'),
   },
@@ -51,25 +51,29 @@ class TableExp extends React.Component {
 
           }]
       };
+      this.page = 0;
+      this.rowsPerPage = 10;
   }
 
 
   componentDidMount () {
-      axios.get('https://oumbd5l1x3.execute-api.us-east-1.amazonaws.com/hml/register', {
-          responseType: 'json'
-      }).then(response => {
-          var data = response.data
-          this.setState({ tableData: data.registers });
-          //console.log(this.state.tableData)
-      });
+    var url = 'https://oumbd5l1x3.execute-api.us-east-1.amazonaws.com/hml/register?page='+this.page+'&paginate_by='+this.rowsPerPage
+    axios.get(url, {
+        responseType: 'json'
+    }).then(response => {
+        var data = response.data
+        this.setState({ tableData: data.registers });
+        this.setState({ paginationInfo: data.metadata });
+    });
   }
 
   render () {
       const { tableData } = this.state;
-
+      //console.log(this.state.paginationInfo.total_pages)
+      
       return (
         <Paper>
-          <TableContainer>
+          <TableContainer style={{ maxHeight: 440}}>
             <Table stickyHeader aria-label="sticky table">
               <TableHead>
                 <TableRow>
@@ -102,8 +106,13 @@ class TableExp extends React.Component {
               </TableBody>
             </Table>
           </TableContainer>
-          <TablePagination/>
-          
+          <TablePagination
+            rowsPerPageOptions={[10, 25, 100]}
+            component="div"
+            count={this.state.paginationInfo.total_rows}
+            rowsPerPage={this.rowsPerPage}
+            page={this.state.paginationInfo.current_page -1}
+          />
         </Paper>
       );
   }
