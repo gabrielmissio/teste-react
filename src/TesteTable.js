@@ -49,15 +49,16 @@ class TableExp extends React.Component {
           }],
           paginationInfo: [{
 
-          }]
+          }],
+          page: 0,
+          rowsPerPage: 10
       };
-      this.page = 0;
-      this.rowsPerPage = 10;
+      
   }
 
 
   componentDidMount () {
-    var url = 'https://oumbd5l1x3.execute-api.us-east-1.amazonaws.com/hml/register?page='+this.page+'&paginate_by='+this.rowsPerPage
+    var url = 'https://oumbd5l1x3.execute-api.us-east-1.amazonaws.com/hml/register?page='+this.state.page+'&paginate_by='+this.state.rowsPerPage
     axios.get(url, {
         responseType: 'json'
     }).then(response => {
@@ -69,6 +70,9 @@ class TableExp extends React.Component {
 
   render () {
       const { tableData } = this.state;
+      const handleChangeRowsPerPage = (event) => {
+        this.setState({ rowsPerPage: +event.target.value },() => this.componentDidMount (), this.setState({ page: 0 }));
+      };
       //console.log(this.state.paginationInfo.total_pages)
       
       return (
@@ -110,8 +114,9 @@ class TableExp extends React.Component {
             rowsPerPageOptions={[10, 25, 100]}
             component="div"
             count={this.state.paginationInfo.total_rows}
-            rowsPerPage={this.rowsPerPage}
+            rowsPerPage={this.state.rowsPerPage}
             page={this.state.paginationInfo.current_page -1}
+            onChangeRowsPerPage={handleChangeRowsPerPage}
           />
         </Paper>
       );
