@@ -1,6 +1,14 @@
 import React, {Component, useReducer, useState } from 'react';
-import './App.css';
 import AsyncSelect from 'react-select/async';
+import CssBaseline from '@material-ui/core/CssBaseline';
+import Typography from '@material-ui/core/Typography';
+import Container from '@material-ui/core/Container';
+import TextField from '@material-ui/core/TextField';
+import { Paper } from '@material-ui/core';
+import Input from '@material-ui/core/Input';
+import Grid from '@material-ui/core/Grid';
+import Button from '@material-ui/core/Button';
+
 
 
 const formReducer = (state, event) => {
@@ -25,7 +33,7 @@ async function getOptions(){
 }
 
 
-function FormRegister() {
+function App() {
   const [formData, setFormData] = useReducer(formReducer, {});
   const [submitting, setSubmitting] = useState(false);
 
@@ -80,35 +88,35 @@ function FormRegister() {
 
 
   return(
-    <div className="wrapper">
-      <h1>Spending Analyzer</h1>
-      {submitting &&
-       <div>
-         You are submitting the following:
-         <ul>
-           {Object.entries(formData).map(([name, value]) => (
-             <li key={name}><strong>{name}</strong>:{value.toString()}</li>
-           ))}
-         </ul>
-       </div>
-      }
-      <form onSubmit={handleSubmit}>
-        <fieldset>
-          <label>
-            <p>Description</p>
-            <input name="description" onChange={handleChange}/>
-            <p>Value</p>
-            <input name="value" onChange={handleChange}/>
-            <p>Type</p>
-            <input name="type" onChange={handleChange}/>
-          </label>
-          <p>Tags</p>
-          <AsyncSelect cacheOptions defaultOptions loadOptions={getOptions} onChange={handleChangeCombo} isMulti/>
-        </fieldset>
-        <button type="submit">Submit</button>
-      </form>
+    <div style={{ padding: 80, margin: 'auto', maxWidth: 500 }}>
+        <Typography variant="h5" align="center" component="h2" gutterBottom>
+        CASH FLOW
+        </Typography>
+        <form onSubmit={handleSubmit}>
+        <Paper style={{ padding: 26 }}>
+          <Grid container direction="column" justify="space-between" alignItems="flex-start" spacing={4}>
+            <Grid container item xs={12}>
+                <TextField fullWidth name="description" label="Description" onChange={handleChange}/>
+            </Grid>
+            <Grid container item xs={12}>
+                <TextField fullWidth name="value" label="Value"  onChange={handleChange}/>
+            </Grid>
+            <Grid container item xs={12}>
+                <TextField fullWidth name="type" label="Type"  onChange={handleChange}/>
+            </Grid>
+            <Grid item xs={12}>
+            </Grid>
+          </Grid>
+          <Grid item xs={12}> 
+            <AsyncSelect cacheOptions defaultOptions loadOptions={getOptions} onChange={handleChangeCombo} isMulti/>
+          </Grid>
+          <br/>
+          <br/>
+          <Button fullWidth variant="contained" type="submit">Submit</Button>
+        </Paper>
+      </form>        
     </div>
   )
 }
 
-export default FormRegister;
+export default App;

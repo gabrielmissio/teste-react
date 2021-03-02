@@ -1,5 +1,4 @@
 import React, {Component, useReducer, useState } from 'react';
-import './App.css';
 import AsyncSelect from 'react-select/async';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Typography from '@material-ui/core/Typography';
