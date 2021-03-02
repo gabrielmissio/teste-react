@@ -1,14 +1,17 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
-//import App from './App';
-import StickyHeadTable from './TableRegister';
-import TableExp from './TesteTable';
+import FormRegister from './FormCreateRegister';
+import FormTag from './FormCreateTag';
+import TableRegister from './TableRegister';
+//import TableExp from './TesteTable';
 import reportWebVitals from './reportWebVitals';
 
 ReactDOM.render(
   <React.StrictMode>
-    <TableExp />
+    <FormRegister />
+    <TableRegister />
+    <FormTag />
   </React.StrictMode>,
   document.getElementById('root')
 );

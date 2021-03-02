@@ -25,7 +25,7 @@ async function getOptions(){
 }
 
 
-function App() {
+function FormRegister() {
   const [formData, setFormData] = useReducer(formReducer, {});
   const [submitting, setSubmitting] = useState(false);
 
@@ -111,4 +111,4 @@ function App() {
   )
 }
 
-export default App;
+export default FormRegister;

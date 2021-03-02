@@ -1,4 +1,6 @@
 import React from 'react';
+import axios from 'axios';
+import ReactDOM from 'react-dom';
 import { makeStyles } from '@material-ui/core/styles';
 import Paper from '@material-ui/core/Paper';
 import Table from '@material-ui/core/Table';
@@ -8,143 +10,122 @@ import TableContainer from '@material-ui/core/TableContainer';
 import TableHead from '@material-ui/core/TableHead';
 import TablePagination from '@material-ui/core/TablePagination';
 import TableRow from '@material-ui/core/TableRow';
-import Clock from './TesteTable';
-
 
 const columns = [
-  { id: 'code', label: 'Name', minWidth: 170 },
-  { id: 'code', label: 'ISO\u00a0Code', minWidth: 100 },
+  { id: 'id', label: 'Id', minWidth: 50 },
+  { id: 'description', label: 'Description', minWidth: 100 },
+  { id: 'type', label: 'Type', minWidth: 50 },
   {
-    id: 'population',
-    label: 'Population',
-    minWidth: 170,
+    id: 'value',
+    label: 'Value',
+    minWidth: 50,
     align: 'right',
     format: (value) => value.toLocaleString('en-US'),
   },
   {
-    id: 'size',
-    label: 'Size\u00a0(km\u00b2)',
-    minWidth: 170,
+    id: 'inserted_at',
+    label: 'Inserted at',
+    minWidth: 100,
     align: 'right',
     format: (value) => value.toLocaleString('en-US'),
   },
   {
-    id: 'density',
-    label: 'Density',
-    minWidth: 170,
+    id: 'updated_at',
+    label: 'Updated at',
+    minWidth: 100,
     align: 'right',
     format: (value) => value.toFixed(2),
   },
 ];
 
-async function getOptions(){
-    var axios = require('axios');
-    const res = await axios.get('https://oumbd5l1x3.execute-api.us-east-1.amazonaws.com/hml/register')
-    const data = res.data
-  
-    const options = data.registers.map(d => ({
-      "id" : d.id,
-      "type" : d.type,
-      "description" : d.description,
-      "value" : d.value,
-      "tags" : d.tags.map(d => ({
-        "tag" : d.name
-      }))
-    }))
-    alert('aqui eu')
-    var teste = []
-    options.map(v => teste.push(createData(v.description, v.type, 1324171354, 3287263)))
-    console.log('processou')
-    return teste
-}
-  
 
-function createData(name, code, population, size) {
-  const density = population / size;
-  return { name, code, population, size, density };
-}
+class TableRegister extends React.Component {
+  constructor () {
+      super();
 
-const rows = [
-  createData('India', 'IN', 1324171354, 3287263),
-  createData('TESTE', 'AA', 1403500365, 9596961),
+      this.state = {
+          tableData: [{
+              
+          }],
+          paginationInfo: [{
 
-];
+          }],
+          page: 0,
+          rowsPerPage: 10
+      };
+      
+  }
 
-const useStyles = makeStyles({
-  root: {
-    width: '100%',
-  },
-  container: {
-    maxHeight: 440,
-  },
-});
 
-export default function StickyHeadTable() {
-  const classes = useStyles();
-  const [page, setPage] = React.useState(0);
-  const [rowsPerPage, setRowsPerPage] = React.useState(10);
- 
-    
-  const handleChangePage = (event, newPage) => {
-    setPage(newPage);
-    getOptions();
-  };
+  componentDidMount () {
+    var url = 'https://oumbd5l1x3.execute-api.us-east-1.amazonaws.com/hml/register?page='+this.state.page+'&paginate_by='+this.state.rowsPerPage
+    axios.get(url, {
+        responseType: 'json'
+    }).then(response => {
+        var data = response.data
+        this.setState({ tableData: data.registers });
+        this.setState({ paginationInfo: data.metadata });
+    });
+  }
 
-  const handleChangeRowsPerPage = (event) => {
-    setRowsPerPage(+event.target.value);
-    console.log('aqui')
-    console.log(rowsPerPage)
-    setPage(0);
-
-  };
-
-  return (
-    <Paper className={classes.root}>
-      <TableContainer className={classes.container}>
-        <Table stickyHeader aria-label="sticky table">
-          <TableHead>
-            <TableRow>
-              {columns.map((column) => (
-                <TableCell
-                  key={column.id}
-                  align={column.align}
-                  style={{ minWidth: column.minWidth }}
-                >
-                  {column.label}
-                </TableCell>
-              ))}
-            </TableRow>
-          </TableHead>
-          <TableBody>
-            {rows.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((row) => {
-              return (
-                <TableRow hover role="checkbox" tabIndex={-1} key={row.code}>
-                  {columns.map((column) => {
-                    const value = row[column.id];
-                    console.log('-------')
-                    console.log(row)
-                    console.log('-------')
-                    return (
-                      <TableCell key={column.id} align={column.align}>
-                        {column.format && typeof value === 'number' ? column.format(value) : value}
-                      </TableCell>
-                    );
-                  })}
+  render () {
+      const { tableData } = this.state;
+      const handleChangeRowsPerPage = (event) => {
+        this.setState({ rowsPerPage: +event.target.value },() => this.setState({ page: 0 }, () => this.componentDidMount ()));
+      };
+      const handleChangePage = (event, newPage) => {
+        this.setState({ page: newPage+1 },() => this.componentDidMount ());
+        console.log(newPage)
+      };
+      return (
+        <Paper>
+          <TableContainer style={{ maxHeight: 440}}>
+            <Table stickyHeader aria-label="sticky table">
+              <TableHead>
+                <TableRow>
+                  {columns.map((column) => (
+                    <TableCell
+                      key={column.id}
+                      align={column.align}
+                      style={{ minWidth: column.minWidth }}
+                    >
+                      {column.label}
+                    </TableCell>
+                  ))}
                 </TableRow>
-              );
-            })}
-          </TableBody>
-        </Table>
-      </TableContainer>
-      <TablePagination
-        rowsPerPageOptions={[10, 25, 100]}
-        component="div"
-        count={rows.length}
-        rowsPerPage={rowsPerPage}
-        page={page}
-        onChangePage={handleChangePage}
-        onChangeRowsPerPage={handleChangeRowsPerPage}
-      />
-    </Paper>
-  );
-}
+              </TableHead>
+              <TableBody>
+                {tableData.slice().map((row) => {
+                  return (
+                    <TableRow hover role="checkbox" tabIndex={-1} key={row.id}>
+                      {columns.map((column) => {
+                        const value = row[column.id];
+                        return (
+                          <TableCell key={column.id} align={column.align}>
+                            {column.format && typeof value === 'number' ? column.format(value) : value}
+                          </TableCell>
+                        );
+                      })}
+                    </TableRow>
+                  );
+                })}
+              </TableBody>
+            </Table>
+          </TableContainer>
+          <TablePagination
+            rowsPerPageOptions={[10, 25, 100]}
+            component="div"
+            count={this.state.paginationInfo.total_rows}
+            rowsPerPage={this.state.rowsPerPage}
+            page={this.state.paginationInfo.current_page -1}
+            onChangeRowsPerPage={handleChangeRowsPerPage}
+            onChangePage={handleChangePage}
+          />
+        </Paper>
+      );
+  }
+};
+
+ReactDOM.render(<div><TableRegister/></div>, document.getElementById("root"));
+
+export default TableRegister;

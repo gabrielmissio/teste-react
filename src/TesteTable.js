@@ -97,7 +97,7 @@ class TableExp extends React.Component {
               <TableBody>
                 {tableData.slice().map((row) => {
                   return (
-                    <TableRow hover role="checkbox" tabIndex={-1} key={row.code}>
+                    <TableRow hover role="checkbox" tabIndex={-1} key={row.id}>
                       {columns.map((column) => {
                         const value = row[column.id];
                         return (
