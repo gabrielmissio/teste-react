@@ -71,10 +71,12 @@ class TableExp extends React.Component {
   render () {
       const { tableData } = this.state;
       const handleChangeRowsPerPage = (event) => {
-        this.setState({ rowsPerPage: +event.target.value },() => this.componentDidMount (), this.setState({ page: 0 }));
+        this.setState({ rowsPerPage: +event.target.value },() => this.setState({ page: 0 }, () => this.componentDidMount ()));
       };
-      //console.log(this.state.paginationInfo.total_pages)
-      
+      const handleChangePage = (event, newPage) => {
+        this.setState({ page: newPage+1 },() => this.componentDidMount ());
+        console.log(newPage)
+      };
       return (
         <Paper>
           <TableContainer style={{ maxHeight: 440}}>
@@ -117,6 +119,7 @@ class TableExp extends React.Component {
             rowsPerPage={this.state.rowsPerPage}
             page={this.state.paginationInfo.current_page -1}
             onChangeRowsPerPage={handleChangeRowsPerPage}
+            onChangePage={handleChangePage}
           />
         </Paper>
       );
