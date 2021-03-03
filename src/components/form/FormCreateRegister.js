@@ -33,7 +33,7 @@ async function getOptions(){
 }
 
 
-function App() {
+function FormRegister() {
   const [formData, setFormData] = useReducer(formReducer, {});
   const [submitting, setSubmitting] = useState(false);
 
@@ -93,7 +93,7 @@ function App() {
         CASH FLOW
         </Typography>
         <form onSubmit={handleSubmit}>
-        <Paper style={{ padding: 26 }}>
+        <Paper style={{ padding: 26 }} elevation={3}>
           <Grid container direction="column" justify="space-between" alignItems="flex-start" spacing={4}>
             <Grid container item xs={12}>
                 <TextField fullWidth name="description" label="Description" onChange={handleChange}/>
@@ -119,4 +119,4 @@ function App() {
   )
 }
 
-export default App;
+export default FormRegister;

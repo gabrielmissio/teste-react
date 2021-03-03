@@ -78,7 +78,7 @@ class TableRegister extends React.Component {
         console.log(newPage)
       };
       return (
-        <Paper>
+        <Paper elevation={3} >
           <TableContainer style={{ maxHeight: 440}}>
             <Table stickyHeader aria-label="sticky table">
               <TableHead>

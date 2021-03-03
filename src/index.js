@@ -4,12 +4,11 @@ import './index.css';
 import FormRegister from './components/form/FormCreateRegister';
 import FormTag from './components/form/FormCreateTag';
 import TableRegister from './components/table/TableRegister';
+import TableTag from './components/table/TableTag';
 
 ReactDOM.render(
   <React.StrictMode>
-    <FormRegister />
-    <TableRegister />
-    <FormTag />
+    <TableTag />
   </React.StrictMode>,
   document.getElementById('root')
 );

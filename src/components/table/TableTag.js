@@ -12,34 +12,12 @@ import TablePagination from '@material-ui/core/TablePagination';
 import TableRow from '@material-ui/core/TableRow';
 
 const columns = [
-  { id: 'id', label: 'Id', minWidth: 50 },
-  { id: 'description', label: 'Description', minWidth: 100 },
-  { id: 'type', label: 'Type', minWidth: 50 },
-  {
-    id: 'value',
-    label: 'Value',
-    minWidth: 50,
-    align: 'right',
-    format: (value) => value.toLocaleString('en-US'),
-  },
-  {
-    id: 'inserted_at',
-    label: 'Inserted at',
-    minWidth: 100,
-    align: 'right',
-    format: (value) => value.toLocaleString('en-US'),
-  },
-  {
-    id: 'updated_at',
-    label: 'Updated at',
-    minWidth: 100,
-    align: 'right',
-    format: (value) => value.toFixed(2),
-  },
+  { id: 'id', label: 'Id', minWidth: 50, align: 'center' },
+  { id: 'name', label: 'Description', minWidth: 100, align: 'center' },
 ];
 
 
-class TableExp extends React.Component {
+class TableTag extends React.Component {
   constructor () {
       super();
 
@@ -58,12 +36,12 @@ class TableExp extends React.Component {
 
 
   componentDidMount () {
-    var url = 'https://oumbd5l1x3.execute-api.us-east-1.amazonaws.com/hml/register?page='+this.state.page+'&paginate_by='+this.state.rowsPerPage
+    var url = 'https://oumbd5l1x3.execute-api.us-east-1.amazonaws.com/hml/tag?page='+this.state.page+'&paginate_by='+this.state.rowsPerPage
     axios.get(url, {
         responseType: 'json'
     }).then(response => {
         var data = response.data
-        this.setState({ tableData: data.registers });
+        this.setState({ tableData: data.tags });
         this.setState({ paginationInfo: data.metadata });
     });
   }
@@ -78,7 +56,7 @@ class TableExp extends React.Component {
         console.log(newPage)
       };
       return (
-        <Paper>
+        <Paper elevation={3}>
           <TableContainer style={{ maxHeight: 440}}>
             <Table stickyHeader aria-label="sticky table">
               <TableHead>
@@ -126,6 +104,6 @@ class TableExp extends React.Component {
   }
 };
 
-ReactDOM.render(<div><TableExp/></div>, document.getElementById("root"));
+ReactDOM.render(<div><TableTag/></div>, document.getElementById("root"));
 
-export default TableExp;
+export default TableTag;

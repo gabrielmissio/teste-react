@@ -83,7 +83,7 @@ function FormTag() {
         TAG MANAGER
         </Typography>
         <form onSubmit={handleSubmit}>
-        <Paper style={{ padding: 26 }}>
+        <Paper style={{ padding: 26 }} elevation={3}>
           <Grid container direction="column" justify="space-between" alignItems="flex-start" spacing={4}>
             <Grid container item xs={12}>
                 <TextField fullWidth name="name" label="Name" onChange={handleChange}/>
