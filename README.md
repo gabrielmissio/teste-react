@@ -6,6 +6,8 @@ npm install axios
 npm install @material-ui/core
 npm install final-form-material-ui
 npm install --save react-router-dom
+npm install --save material-ui-icons
+npm install @material-ui/icons
 
 
 

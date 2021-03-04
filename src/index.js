@@ -15,7 +15,7 @@ ReactDOM.render(
             <Route path="/" exact={true} component={Home} />
             <Route path="*" exact={true} component={NotFound} />
             <Route path="/new-register" component={FormRegister} />
-            <Route path="/view-register" component={TableRegister} />
+            <Route path="/view-register" component={TableRegister} /> 
             <Route path="/new-tag" component={FormTag} />
             <Route path="/view-tag" component={TableTag} />
         </Switch>
