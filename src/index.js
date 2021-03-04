@@ -5,11 +5,21 @@ import FormRegister from './components/form/FormCreateRegister';
 import FormTag from './components/form/FormCreateTag';
 import TableRegister from './components/table/TableRegister';
 import TableTag from './components/table/TableTag';
+import Home from './components/home/Home';
+import NotFound from './components/not_found/NotFound';
+import { BrowserRouter, Switch, Route } from 'react-router-dom'
 
 ReactDOM.render(
-  <React.StrictMode>
-    <TableTag />
-  </React.StrictMode>,
+  <BrowserRouter>
+      <Switch>
+            <Route path="/" exact={true} component={Home} />
+            <Route path="*" exact={true} component={NotFound} />
+            <Route path="/new-register" component={FormRegister} />
+            <Route path="/view-register" component={TableRegister} />
+            <Route path="/new-tag" component={FormTag} />
+            <Route path="/view-tag" component={TableTag} />
+        </Switch>
+  </ BrowserRouter>,
   document.getElementById('root')
 );
 
