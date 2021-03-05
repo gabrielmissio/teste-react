@@ -219,6 +219,12 @@ export default function Home() {
             ))}
           </List>
         </Drawer>
+        <main
+          className={clsx(classes.content, {
+            [classes.contentShift]: open,
+          })}
+        > 
+        <div className={classes.drawerHeader} />
         <Switch>
           <Route exact path="/" component={Dashboard}/>
           <Route exact path="/cash-flow" component={FormRegister}/>
@@ -227,6 +233,7 @@ export default function Home() {
           <Route exact path="/*" component={NotFound}/>
           
         </Switch>
+        </main>
       </div>
     </Router>
   );
