@@ -21,8 +21,14 @@ import AccountCircle from '@material-ui/icons/AccountCircle';
 import { Grid } from '@material-ui/core';
 import GitHubIcon from '@material-ui/icons/GitHub';
 import Button from '@material-ui/core/Button';
-import { Link } from 'react-router-dom'
-
+import Link from '@material-ui/core/Link';
+import { NavLink } from 'react-router-dom'
+import FormRegister from '../form/FormCreateRegister';
+import FormTag from '../form/FormCreateTag';
+import TableRegister from '../table/TableRegister';
+import TableTag from '../table/TableTag';
+import Dashboard from '../view/Dashboard';
+import { BrowserRouter, Switch, Route } from 'react-router-dom'
 
 
 const drawerWidth = 240;
@@ -117,12 +123,11 @@ export default function Home() {
             <MenuIcon />
           </IconButton>
         <Grid container direction="row" justify="flex-start" xs={6}>
-          <Typography  variant="h6" noWrap>
-            Spending Analyzer  
+          <Typography variant="h6" noWrap>
+            <Link href="/"  color="inherit" >
+              {'Spending Analyzer'}
+            </Link>
           </Typography>
-          <Link to="/sobre" >
-            
-          </Link>
         </Grid>
         <Grid container direction="row" justify="flex-end" xs={8} >
           <Button
@@ -131,6 +136,8 @@ export default function Home() {
             color="primary"
             className={classes.button}
             startIcon={<GitHubIcon />}
+            href="https://github.com/gabrielmissio/teste-react"
+            target="_blank"
           >
               Source Code
           </Button>
@@ -164,12 +171,12 @@ export default function Home() {
         </div>
         <Divider />
         <List>
-          {['Inbox', 'Starred', 'Send email', 'Drafts'].map((text, index) => (
-            <ListItem button key={text}>
-              <ListItemIcon>{index % 2 === 0 ? <InboxIcon /> : <MailIcon />}</ListItemIcon>
-              <ListItemText primary={text} />
+          <NavLink to={"/new-register"} style={{ textDecoration: 'none', color: "inherit" }}>
+            <ListItem button>
+              <ListItemIcon>{<InboxIcon />}</ListItemIcon>
+              <ListItemText primary={"um texto"} />
             </ListItem>
-          ))}
+          </NavLink>            
         </List>
         <Divider />
         <List>
@@ -190,7 +197,16 @@ export default function Home() {
         <Typography variant="h6" noWrap>
           Graficos e outras coisas legais
         </Typography>
-        
+        <BrowserRouter>
+          <Switch>
+              <Route path="/new-register" exact={true} component={Dashboard} />
+              <Route path="/new-register" component={FormRegister} />
+              <Route path="/view-register" component={TableRegister} /> 
+              <Route path="/new-tag" component={FormTag} />
+              <Route path="/view-tag" component={TableTag} />
+              <Route path="*" exact={true} component={TableTag} />
+          </Switch>
+        </ BrowserRouter>
       </main>
     </div>
   );

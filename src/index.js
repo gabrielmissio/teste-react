@@ -1,12 +1,12 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
+import NotFound from './components/not_found/NotFound';
+import Home from './components/layout/Home';
 import FormRegister from './components/form/FormCreateRegister';
 import FormTag from './components/form/FormCreateTag';
 import TableRegister from './components/table/TableRegister';
 import TableTag from './components/table/TableTag';
-import Home from './components/home/Home';
-import NotFound from './components/not_found/NotFound';
 import { BrowserRouter, Switch, Route } from 'react-router-dom'
 
 ReactDOM.render(
@@ -14,10 +14,6 @@ ReactDOM.render(
       <Switch>
             <Route path="/" exact={true} component={Home} />
             <Route path="*" exact={true} component={NotFound} />
-            <Route path="/new-register" component={FormRegister} />
-            <Route path="/view-register" component={TableRegister} /> 
-            <Route path="/new-tag" component={FormTag} />
-            <Route path="/view-tag" component={TableTag} />
         </Switch>
   </ BrowserRouter>,
   document.getElementById('root')

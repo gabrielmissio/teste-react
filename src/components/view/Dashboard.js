@@ -3,15 +3,15 @@ import Typography from '@material-ui/core/Typography';
 
 
 
-function NotFound() {
+function Dashboard() {
 
   return(
     <div style={{ padding: 80, margin: 'auto', maxWidth: 500 }}>
         <Typography variant="h5" align="center" component="h2" gutterBottom>
-        404 Not Found
+          Dashboard :D
         </Typography>
     </div>
   )
 }
 
-export default NotFound;
+export default Dashboard;
