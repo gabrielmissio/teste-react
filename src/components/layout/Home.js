@@ -29,7 +29,12 @@ import TableRegister from '../table/TableRegister';
 import TableTag from '../table/TableTag';
 import Dashboard from '../view/Dashboard';
 import { BrowserRouter, Switch, Route } from 'react-router-dom'
-
+import HomeIcon from '@material-ui/icons/Home';
+import AccountBalanceWalletIcon from '@material-ui/icons/AccountBalanceWallet';
+import LocalOfferIcon from '@material-ui/icons/LocalOffer';
+import TimelineIcon from '@material-ui/icons/Timeline';
+import SwapVertIcon from '@material-ui/icons/SwapVert';
+import SwapVerticalCircleIcon from '@material-ui/icons/SwapVerticalCircle';
 
 const drawerWidth = 240;
 
@@ -173,16 +178,34 @@ export default function Home() {
         <List>
           <NavLink to={"/new-register"} style={{ textDecoration: 'none', color: "inherit" }}>
             <ListItem button>
-              <ListItemIcon>{<InboxIcon />}</ListItemIcon>
-              <ListItemText primary={"um texto"} />
+              <ListItemIcon>{<HomeIcon />}</ListItemIcon>
+              <ListItemText primary={"Home"} />
             </ListItem>
-          </NavLink>            
+          </NavLink> 
+          <NavLink to={"/new-register"} style={{ textDecoration: 'none', color: "inherit" }}>
+            <ListItem button>
+              <ListItemIcon>{<AccountBalanceWalletIcon />}</ListItemIcon>
+              <ListItemText primary={"Cash Flow"} />
+            </ListItem>
+          </NavLink>  
+          <NavLink to={"/new-register"} style={{ textDecoration: 'none', color: "inherit" }}>
+            <ListItem button>
+              <ListItemIcon>{<SwapVerticalCircleIcon />}</ListItemIcon>
+              <ListItemText primary={"List Registers"} />
+            </ListItem>
+          </NavLink>  
+          <NavLink to={"/new-register"} style={{ textDecoration: 'none', color: "inherit" }}>
+            <ListItem button>
+              <ListItemIcon>{<LocalOfferIcon />}</ListItemIcon>
+              <ListItemText primary={"List Tags"} />
+            </ListItem>
+          </NavLink>             
         </List>
         <Divider />
         <List>
-          {['All mail', 'Trash', 'Spam'].map((text, index) => (
+          {['-----', '-----', '-----'].map((text, index) => (
             <ListItem button key={text}>
-              <ListItemIcon>{index % 2 === 0 ? <InboxIcon /> : <MailIcon />}</ListItemIcon>
+              <ListItemIcon>{<InboxIcon />}</ListItemIcon>
               <ListItemText primary={text} />
             </ListItem>
           ))}
