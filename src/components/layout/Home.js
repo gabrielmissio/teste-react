@@ -16,7 +16,6 @@ import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 import InboxIcon from '@material-ui/icons/MoveToInbox';
-import MailIcon from '@material-ui/icons/Mail';
 import AccountCircle from '@material-ui/icons/AccountCircle';
 import { Grid } from '@material-ui/core';
 import GitHubIcon from '@material-ui/icons/GitHub';
@@ -31,12 +30,9 @@ import Dashboard from '../view/Dashboard';
 import HomeIcon from '@material-ui/icons/Home';
 import AccountBalanceWalletIcon from '@material-ui/icons/AccountBalanceWallet';
 import LocalOfferIcon from '@material-ui/icons/LocalOffer';
-import TimelineIcon from '@material-ui/icons/Timeline';
-import SwapVertIcon from '@material-ui/icons/SwapVert';
 import SwapVerticalCircleIcon from '@material-ui/icons/SwapVerticalCircle';
-import Container from '@material-ui/core/Container';
 import NotFound from '../not_found/NotFound';
-
+import AddCircleIcon from '@material-ui/icons/AddCircle';
 
 import {
   BrowserRouter as Router,
@@ -207,6 +203,12 @@ export default function Home() {
                 <ListItemIcon>{<LocalOfferIcon />}</ListItemIcon>
                 <ListItemText primary={"List Tags"} />
               </ListItem>
+            </NavLink>  
+            <NavLink  to={"/create-tag"} style={{ textDecoration: 'none', color: "inherit" }}>
+              <ListItem button>
+                <ListItemIcon>{<AddCircleIcon />}</ListItemIcon>
+                <ListItemText primary={"Create Tag"} />
+              </ListItem>
             </NavLink>             
           </List>
           <Divider />
@@ -230,6 +232,7 @@ export default function Home() {
           <Route exact path="/cash-flow" component={FormRegister}/>
           <Route exact path="/list-register" component={TableRegister}/>
           <Route exact path="/list-tag" component={TableTag}/>
+          <Route exact path="/create-tag" component={FormTag}/>
           <Route exact path="/*" component={NotFound}/>
           
         </Switch>
