@@ -28,13 +28,20 @@ import FormTag from '../form/FormCreateTag';
 import TableRegister from '../table/TableRegister';
 import TableTag from '../table/TableTag';
 import Dashboard from '../view/Dashboard';
-import { BrowserRouter, Switch, Route } from 'react-router-dom'
 import HomeIcon from '@material-ui/icons/Home';
 import AccountBalanceWalletIcon from '@material-ui/icons/AccountBalanceWallet';
 import LocalOfferIcon from '@material-ui/icons/LocalOffer';
 import TimelineIcon from '@material-ui/icons/Timeline';
 import SwapVertIcon from '@material-ui/icons/SwapVert';
 import SwapVerticalCircleIcon from '@material-ui/icons/SwapVerticalCircle';
+import Container from '@material-ui/core/Container';
+import NotFound from '../not_found/NotFound';
+
+
+import {
+  BrowserRouter as Router,
+  Switch, Route
+} from "react-router-dom";
 
 const drawerWidth = 240;
 
@@ -109,129 +116,119 @@ export default function Home() {
   };
 
   return (
-    <div className={classes.root}>
+    <Router>
+      <div className={classes.root}>
       <CssBaseline />
-      <AppBar
-        position="fixed"
-        className={clsx(classes.appBar, {
-          [classes.appBarShift]: open,
-        })}
-      >
-        <Toolbar>
-          <IconButton
-            color="inherit"
-            aria-label="open drawer"
-            onClick={handleDrawerOpen}
-            edge="start"
-            className={clsx(classes.menuButton, open && classes.hide)}
-          >
-            <MenuIcon />
-          </IconButton>
-        <Grid container direction="row" justify="flex-start" xs={6}>
-          <Typography variant="h6" noWrap>
-            <Link href="/"  color="inherit" >
-              {'Spending Analyzer'}
-            </Link>
-          </Typography>
-        </Grid>
-        <Grid container direction="row" justify="flex-end" xs={8} >
-          <Button
-            disableElevation
-            variant="contained"
-            color="primary"
-            className={classes.button}
-            startIcon={<GitHubIcon />}
-            href="https://github.com/gabrielmissio/teste-react"
-            target="_blank"
-          >
-              Source Code
-          </Button>
-          <Button
-            disableElevation
-            variant="contained"
-            color="primary"
-            className={classes.button}
-            startIcon={<AccountCircle />}
-          >
-            Profile
-          </Button>
+        <AppBar
+          position="fixed"
+          className={clsx(classes.appBar, {
+            [classes.appBarShift]: open,
+          })}
+        >
+          <Toolbar>
+            <IconButton
+              color="inherit"
+              aria-label="open drawer"
+              onClick={handleDrawerOpen}
+              edge="start"
+              className={clsx(classes.menuButton, open && classes.hide)}
+            >
+              <MenuIcon />
+            </IconButton>
+          <Grid container direction="row" justify="flex-start" xs={6}>
+            <Typography variant="h6" noWrap>
+              <Link href="/"  color="inherit" >
+                {'Spending Analyzer'}
+              </Link>
+            </Typography>
+          </Grid>
+          <Grid container direction="row" justify="flex-end" xs={8} >
+            <Button
+              disableElevation
+              variant="contained"
+              color="primary"
+              className={classes.button}
+              startIcon={<GitHubIcon />}
+              href="https://github.com/gabrielmissio/teste-react"
+              target="_blank"
+            >
+                Source Code
+            </Button>
+            <Button
+              disableElevation
+              variant="contained"
+              color="primary"
+              className={classes.button}
+              startIcon={<AccountCircle />}
+            >
+              Profile
+            </Button>
 
-        </Grid>
+          </Grid>
+            
+          </Toolbar>
+        </AppBar>
+        <Drawer
+          className={classes.drawer}
+          variant="persistent"
+          anchor="left"
+          open={open}
+          classes={{
+            paper: classes.drawerPaper,
+          }}
+        >
+          <div className={classes.drawerHeader}>
+            <IconButton onClick={handleDrawerClose}>
+              {theme.direction === 'ltr' ? <ChevronLeftIcon /> : <ChevronRightIcon />}
+            </IconButton>
+          </div>
+          <Divider />
+          <List>
+            <NavLink to={"/"} style={{ textDecoration: 'none', color: "inherit" }}>
+              <ListItem button>
+                <ListItemIcon>{<HomeIcon />}</ListItemIcon>
+                <ListItemText primary={"Home"} />
+              </ListItem>
+            </NavLink> 
+            <NavLink to={"/cash-flow"} style={{ textDecoration: 'none', color: "inherit" }}>
+              <ListItem button>
+                <ListItemIcon>{<AccountBalanceWalletIcon />}</ListItemIcon>
+                <ListItemText primary={"Cash Flow"} />
+              </ListItem>
+            </NavLink>  
+            <NavLink to={"/list-register"} style={{ textDecoration: 'none', color: "inherit" }}>
+              <ListItem button>
+                <ListItemIcon>{<SwapVerticalCircleIcon />}</ListItemIcon>
+                <ListItemText primary={"List Registers"} />
+              </ListItem>
+            </NavLink>  
+            <NavLink  to={"/list-tag"} style={{ textDecoration: 'none', color: "inherit" }}>
+              <ListItem button>
+                <ListItemIcon>{<LocalOfferIcon />}</ListItemIcon>
+                <ListItemText primary={"List Tags"} />
+              </ListItem>
+            </NavLink>             
+          </List>
+          <Divider />
+          <List>
+            {['-----', '-----', '-----'].map((text, index) => (
+              <ListItem button key={text}>
+                <ListItemIcon>{<InboxIcon />}</ListItemIcon>
+                <ListItemText primary={text} />
+              </ListItem>
+            ))}
+          </List>
+        </Drawer>
+        <Switch>
+          <Route exact path="/" component={Dashboard}/>
+          <Route exact path="/cash-flow" component={FormRegister}/>
+          <Route exact path="/list-register" component={TableRegister}/>
+          <Route exact path="/list-tag" component={TableTag}/>
+          <Route exact path="/*" component={NotFound}/>
           
-        </Toolbar>
-      </AppBar>
-      <Drawer
-        className={classes.drawer}
-        variant="persistent"
-        anchor="left"
-        open={open}
-        classes={{
-          paper: classes.drawerPaper,
-        }}
-      >
-        <div className={classes.drawerHeader}>
-          <IconButton onClick={handleDrawerClose}>
-            {theme.direction === 'ltr' ? <ChevronLeftIcon /> : <ChevronRightIcon />}
-          </IconButton>
-        </div>
-        <Divider />
-        <List>
-          <NavLink to={"/new-register"} style={{ textDecoration: 'none', color: "inherit" }}>
-            <ListItem button>
-              <ListItemIcon>{<HomeIcon />}</ListItemIcon>
-              <ListItemText primary={"Home"} />
-            </ListItem>
-          </NavLink> 
-          <NavLink to={"/new-register"} style={{ textDecoration: 'none', color: "inherit" }}>
-            <ListItem button>
-              <ListItemIcon>{<AccountBalanceWalletIcon />}</ListItemIcon>
-              <ListItemText primary={"Cash Flow"} />
-            </ListItem>
-          </NavLink>  
-          <NavLink to={"/new-register"} style={{ textDecoration: 'none', color: "inherit" }}>
-            <ListItem button>
-              <ListItemIcon>{<SwapVerticalCircleIcon />}</ListItemIcon>
-              <ListItemText primary={"List Registers"} />
-            </ListItem>
-          </NavLink>  
-          <NavLink to={"/new-register"} style={{ textDecoration: 'none', color: "inherit" }}>
-            <ListItem button>
-              <ListItemIcon>{<LocalOfferIcon />}</ListItemIcon>
-              <ListItemText primary={"List Tags"} />
-            </ListItem>
-          </NavLink>             
-        </List>
-        <Divider />
-        <List>
-          {['-----', '-----', '-----'].map((text, index) => (
-            <ListItem button key={text}>
-              <ListItemIcon>{<InboxIcon />}</ListItemIcon>
-              <ListItemText primary={text} />
-            </ListItem>
-          ))}
-        </List>
-      </Drawer>
-      <main
-        className={clsx(classes.content, {
-          [classes.contentShift]: open,
-        })}
-      >
-        <div className={classes.drawerHeader} />
-        <Typography variant="h6" noWrap>
-          Graficos e outras coisas legais
-        </Typography>
-        <BrowserRouter>
-          <Switch>
-              <Route path="/new-register" exact={true} component={Dashboard} />
-              <Route path="/new-register" component={FormRegister} />
-              <Route path="/view-register" component={TableRegister} /> 
-              <Route path="/new-tag" component={FormTag} />
-              <Route path="/view-tag" component={TableTag} />
-              <Route path="*" exact={true} component={TableTag} />
-          </Switch>
-        </ BrowserRouter>
-      </main>
-    </div>
+        </Switch>
+      </div>
+    </Router>
   );
 }
 

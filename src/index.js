@@ -10,12 +10,9 @@ import TableTag from './components/table/TableTag';
 import { BrowserRouter, Switch, Route } from 'react-router-dom'
 
 ReactDOM.render(
-  <BrowserRouter>
-      <Switch>
-            <Route path="/" exact={true} component={Home} />
-            <Route path="*" exact={true} component={NotFound} />
-        </Switch>
-  </ BrowserRouter>,
+  <React.StrictMode>
+    <Home />
+  </React.StrictMode>,
   document.getElementById('root')
 );
 
