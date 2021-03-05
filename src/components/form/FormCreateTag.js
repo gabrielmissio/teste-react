@@ -1,17 +1,11 @@
 import React, {Component, useReducer, useState } from 'react';
-import AsyncSelect from 'react-select/async';
-import CssBaseline from '@material-ui/core/CssBaseline';
 import Typography from '@material-ui/core/Typography';
-import Container from '@material-ui/core/Container';
 import TextField from '@material-ui/core/TextField';
 import { Paper } from '@material-ui/core';
-import Input from '@material-ui/core/Input';
 import Grid from '@material-ui/core/Grid';
 import Button from '@material-ui/core/Button';
 import SendIcon from '@material-ui/icons/Send';
 import Box from '@material-ui/core/Box';
-
-
 
 const formReducer = (state, event) => {
   return {
@@ -21,19 +15,6 @@ const formReducer = (state, event) => {
 }
 
 var valueTeste = []
-
-async function getOptions(){
-  var axios = require('axios');
-  const res = await axios.get('https://oumbd5l1x3.execute-api.us-east-1.amazonaws.com/hml/tag')
-  const data = res.data
-
-  const options = data.tags.map(d => ({
-    "value" : d.id,
-    "label" : d.name
-  }))
-  return options
-}
-
 
 function FormTag() {
   const [formData, setFormData] = useReducer(formReducer, {});
