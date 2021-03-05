@@ -8,7 +8,8 @@ import { Paper } from '@material-ui/core';
 import Input from '@material-ui/core/Input';
 import Grid from '@material-ui/core/Grid';
 import Button from '@material-ui/core/Button';
-
+import SendIcon from '@material-ui/icons/Send';
+import Box from '@material-ui/core/Box';
 
 
 const formReducer = (state, event) => {
@@ -88,21 +89,28 @@ function FormRegister() {
 
 
   return(
-    <div style={{ padding: 80, margin: 'auto', maxWidth: 500 }}>
-        <Typography variant="h5" align="center" component="h2" gutterBottom>
-        CASH FLOW
-        </Typography>
+    <div style={{ padding: 0, margin: 'auto', maxWidth: 500 }}>
+
         <form onSubmit={handleSubmit}>
         <Paper style={{ padding: 26 }} elevation={3}>
+                      
+            
           <Grid container direction="column" justify="space-between" alignItems="flex-start" spacing={4}>
-            <Grid container item xs={12}>
-                <TextField fullWidth name="description" label="Description" onChange={handleChange}/>
+            <Grid  container item xs={12} alignItems="flex-start" justify="center">
+              <Typography color="primary" variant="h6" align="center" component="h2"  alignItems="center" justify="center">
+                <Box fontWeight="fontWeightBold">
+                CASH FLOW
+                </Box>
+              </Typography>            
             </Grid>
             <Grid container item xs={12}>
-                <TextField fullWidth name="value" label="Value"  onChange={handleChange}/>
+                <TextField variant="outlined" fullWidth name="description" label="Description" onChange={handleChange}/>
             </Grid>
             <Grid container item xs={12}>
-                <TextField fullWidth name="type" label="Type"  onChange={handleChange}/>
+                <TextField variant="outlined" fullWidth name="value" label="Value"  onChange={handleChange}/>
+            </Grid>
+            <Grid container item xs={12}>
+                <TextField variant="outlined" fullWidth name="type" label="Type"  onChange={handleChange}/>
             </Grid>
             <Grid item xs={12}>
             </Grid>
@@ -112,7 +120,15 @@ function FormRegister() {
           </Grid>
           <br/>
           <br/>
-          <Button fullWidth variant="contained" type="submit">Submit</Button>
+          <Button
+              disableElevation
+              variant="contained"
+              color="primary"
+              fullWidth
+              endIcon={<SendIcon/>}
+            >
+              Submit
+          </Button>
         </Paper>
       </form>        
     </div>
